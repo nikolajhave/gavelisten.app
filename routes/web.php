@@ -7,6 +7,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::resource('families', FamilyController::class);
+//Route::resource('users', UserController::class);
+Route::resource('wishes', WishController::class);
+
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
