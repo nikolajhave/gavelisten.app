@@ -18,6 +18,12 @@
                     <x-nav-link :href="route('wishes.index')" :active="request()->routeIs('wishes.*')">
                         {{ __('My Wishes') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('connections.index')" :active="request()->routeIs('connections.index')">
+                        {{ __('My Connections') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('connections.wishes')" :active="request()->routeIs('connections.wishes')">
+                        {{ __('Friends\' Wishes') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -75,6 +81,12 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('wishes.index')" :active="request()->routeIs('wishes.*')">
                 {{ __('My Wishes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('connections.index')" :active="request()->routeIs('connections.index')">
+                {{ __('My Connections') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('connections.wishes')" :active="request()->routeIs('connections.wishes')">
+                {{ __('Friends\' Wishes') }}
             </x-responsive-nav-link>
         </div>
 

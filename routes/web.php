@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,12 @@ Route::get('/', function () {
 //Route::resource('users', UserController::class);
 Route::middleware('auth')->group(function () {
     Route::resource('wishes', WishController::class);
+
+    // Connection routes
+    Route::resource('connections', ConnectionController::class);
+    Route::post('/connections/{connection}/accept', [ConnectionController::class, 'accept'])->name('connections.accept');
+    Route::post('/connections/{connection}/reject', [ConnectionController::class, 'reject'])->name('connections.reject');
+    Route::get('/connected-wishes', [ConnectionController::class, 'connectedWishes'])->name('connections.wishes');
 });
 
 

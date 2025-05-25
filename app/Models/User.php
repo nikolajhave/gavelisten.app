@@ -53,4 +53,48 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wish::class);
     }
+
+    /**
+     * Get the connections that the user has initiated.
+     */
+    public function sentConnections()
+    {
+        return $this->hasMany(Connection::class, 'user_id');
+    }
+
+    /**
+     * Get the connections that the user has received.
+     */
+    public function receivedConnections()
+    {
+        return $this->hasMany(Connection::class, 'connected_user_id');
+    }
+
+    /**
+     * Get all users that this user is connected to (with accepted status).
+     */
+    public function connections()
+    {
+        return $this->belongsToMany(User::class, 'connections', 'user_id', 'connected_user_id')
+            ->wherePivot('status', 'accepted')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get all users that are connected to this user (with accepted status).
+     */
+    public function connectedBy()
+    {
+        return $this->belongsToMany(User::class, 'connections', 'connected_user_id', 'user_id')
+            ->wherePivot('status', 'accepted')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get all connected users (both ways, with accepted status).
+     */
+    public function allConnections()
+    {
+        return $this->connections->merge($this->connectedBy);
+    }
 }
