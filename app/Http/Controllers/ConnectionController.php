@@ -66,9 +66,19 @@ class ConnectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(string $id): View|RedirectResponse
     {
         $user = User::findOrFail($id);
+        $authUser = Auth::user();
+
+        // Check if the authenticated user is connected to this user
+        $isConnected = $authUser->allConnections()->contains($user->id);
+
+        if (!$isConnected) {
+            return redirect()->route('connections.index')
+                ->with('error', 'You must be connected to this user to view their wishes.');
+        }
+
         $wishes = $user->wishes;
 
         return view('connections.show', compact('user', 'wishes'));
