@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WishController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,7 +10,9 @@ Route::get('/', function () {
 
 //Route::resource('families', FamilyController::class);
 //Route::resource('users', UserController::class);
-Route::resource('wishes', WishController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource('wishes', WishController::class);
+});
 
 
 

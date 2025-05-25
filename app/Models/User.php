@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the wishes for the user.
+     */
+    public function wishes()
+    {
+        return $this->hasMany(Wish::class);
+    }
 }
