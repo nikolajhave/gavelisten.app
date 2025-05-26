@@ -5,7 +5,11 @@
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+            @if(auth()->user()->provider)
+                {{ __('You\'re currently logged in using a social provider. Setting a password will allow you to log in using your email and password as well.') }}
+            @else
+                {{ __('Ensure your account is using a long, random password to stay secure.') }}
+            @endif
         </p>
     </header>
 
@@ -13,11 +17,13 @@
         @csrf
         @method('put')
 
+        @if(!auth()->user()->provider)
         <div>
             <x-input-label for="update_password_current_password" :value="__('Current Password')" />
             <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
+        @endif
 
         <div>
             <x-input-label for="update_password_password" :value="__('New Password')" />

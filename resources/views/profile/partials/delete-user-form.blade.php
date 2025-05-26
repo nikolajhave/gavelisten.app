@@ -24,9 +24,14 @@
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                @if(auth()->user()->provider)
+                    {{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}
+                @else
+                    {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                @endif
             </p>
 
+            @if(!auth()->user()->provider)
             <div class="mt-6">
                 <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
 
@@ -40,6 +45,7 @@
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
+            @endif
 
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">
